@@ -65,15 +65,15 @@ public class JogoDaVelha {
 
         tabuleiro[jogadaO[0]-1][jogadaO[1]-1] = 'O';
     }
-    public static boolean verificarSeVenceu(Character [][] tabuleiro){
-        if (contarLinhasIguais(tabuleiro) > 0 || contarColunasIguais(tabuleiro) > 0 || verificarDiagonaisIguais(tabuleiro)){
+    public static boolean checaVencedor(Character [][] tabuleiro){
+        if (contarLinhasCompletas(tabuleiro) > 0 || contarColunasCompletas(tabuleiro) > 0 || verificarDiagonaisCompletas(tabuleiro)){
             return true;
         } else {
             return false;
         }
     }
-    private static int contarLinhasIguais(Character[][] tabuleiro){
-        int linhasIguais = 0;
+    private static int contarLinhasCompletas(Character[][] tabuleiro){
+        int linhasCompletas = 0;
         int elementosIguaisNaLinha = 0;
         for (Character[] linha : tabuleiro) {
             for (Character posicao : linha) {
@@ -82,17 +82,15 @@ public class JogoDaVelha {
                     elementosIguaisNaLinha++;
                 }
                 if (elementosIguaisNaLinha == 3){
-                    linhasIguais++;
+                    linhasCompletas++;
                 }
             }
             elementosIguaisNaLinha = 0;
         }
-        return linhasIguais;
+        return linhasCompletas;
     }
-
-    //PRA LEMBRAR: MUDAR O NOME DO CODIGO PARA CONTAR LINHAS IGUAIS, ADICIONAR UM CONTADOR PRA SOMAR A QUANTIDADE DE LINHAS OU COLUNAS OU DIAGONAIS IGUAIS!
-    private static int contarColunasIguais(Character[][] tabuleiro){
-        int colunasIguais = 0;
+    private static int contarColunasCompletas(Character[][] tabuleiro){
+        int colunasCompletas = 0;
         int elementosIguaisNaColuna = 0;
 
         for (int indiceColuna = 0; indiceColuna < tabuleiro[0].length; indiceColuna++) {
@@ -103,14 +101,14 @@ public class JogoDaVelha {
                     elementosIguaisNaColuna++;
                 }
                 if (elementosIguaisNaColuna == 3){
-                    colunasIguais++;
+                    colunasCompletas++;
                 }
             }
             elementosIguaisNaColuna = 0;
         }
-        return colunasIguais;
+        return colunasCompletas;
     }
-    private static boolean verificarDiagonaisIguais (Character[][] tabuleiro){
+    private static boolean verificarDiagonaisCompletas (Character[][] tabuleiro){
         if (tabuleiro[0][0] == tabuleiro [1][1] && tabuleiro[1][1] == tabuleiro[2][2] && tabuleiro[0][0] != null){
             return true;
         }
@@ -120,5 +118,71 @@ public class JogoDaVelha {
         else{
             return false;
         }
+    }
+
+    public static boolean verificaSeHaJogo(Character[][] tabuleiro, int jogadasRestantes, Character simbolo){
+
+        if (jogadasRestantes > 2){
+            return true;
+        }
+
+        for (int indiceLinha = 0; indiceLinha < 3; indiceLinha++) {
+            int simbolosNaLinha = 0;
+            int vaziosNaLinha = 0;
+            for (int indiceColuna = 0; indiceColuna < 3; indiceColuna++) {
+                if (tabuleiro[indiceLinha][indiceColuna] == simbolo){
+                    simbolosNaLinha++;
+                } else if (tabuleiro[indiceLinha][indiceColuna] == null){
+                    vaziosNaLinha++;
+                }
+            }
+            if (simbolosNaLinha == 2 && vaziosNaLinha == 1){
+                return true;
+            }
+        }
+
+        for (int indiceColuna = 0; indiceColuna < 3; indiceColuna++) {
+            int simbolosNaColuna = 0;
+            int vaziosNaColuna = 0;
+            for (int indiceLinha = 0; indiceLinha < 3; indiceLinha++) {
+                if (tabuleiro[indiceLinha][indiceColuna] == simbolo){
+                    simbolosNaColuna++;
+                } else if (tabuleiro[indiceLinha][indiceColuna] == null){
+                    vaziosNaColuna++;
+                }
+            }
+            if (simbolosNaColuna == 2 && vaziosNaColuna == 1){
+                return true;
+            }
+        }
+
+            int simbolosNaDiagonal = 0;
+            int vaziosNaDiagonal = 0;
+        for (int indiceLinha = 0; indiceLinha < 3; indiceLinha++) {
+            int indiceColuna = indiceLinha;
+            if (tabuleiro[indiceLinha][indiceColuna] == simbolo) {
+                simbolosNaDiagonal++;
+            }else if (tabuleiro[indiceLinha][indiceColuna] == null) {
+                vaziosNaDiagonal++;
+            }
+        }
+        if (simbolosNaDiagonal == 2 && vaziosNaDiagonal == 1){
+            return true;
+        }
+        simbolosNaDiagonal = 0;
+        vaziosNaDiagonal = 0;
+        int indiceColuna = 2;
+        for (int indiceLinha = 0; indiceLinha < 3; indiceLinha++){
+            if (tabuleiro[indiceLinha][indiceColuna] == simbolo){
+                simbolosNaDiagonal++;
+            }else if (tabuleiro[indiceLinha][indiceColuna] == null ){
+                vaziosNaDiagonal++;
+            }
+            indiceColuna--;
+        }
+        if (simbolosNaDiagonal == 2 && vaziosNaDiagonal == 1){
+            return true;
+        }
+        return false;
     }
 }

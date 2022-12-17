@@ -7,19 +7,26 @@ public class Main {
 
         JogoDaVelha.imprimirTabuleiro(tabuleiro);
 
+        int jogadasRestantes = 9;
 
-        while (!JogoDaVelha.verificarSeVenceu(tabuleiro)) {
+        while (!JogoDaVelha.checaVencedor(tabuleiro) && JogoDaVelha.verificaSeHaJogo(tabuleiro, jogadasRestantes, 'X')) {
 
             JogoDaVelha.jogadaDeX(tabuleiro, scanner);
             JogoDaVelha.imprimirTabuleiro(tabuleiro);
+            jogadasRestantes--;
 
-            if (JogoDaVelha.verificarSeVenceu(tabuleiro)) {
+            if (JogoDaVelha.checaVencedor(tabuleiro)) {
                 System.out.println("Jogador 01 Venceu!");
+            } else if (!JogoDaVelha.verificaSeHaJogo(tabuleiro,jogadasRestantes, 'O')) {
+                System.out.println("Deu Velha!");
             } else {
                 JogoDaVelha.jogadaDeO(tabuleiro, scanner);
                 JogoDaVelha.imprimirTabuleiro(tabuleiro);
-                if (JogoDaVelha.verificarSeVenceu(tabuleiro)) {
+                jogadasRestantes--;
+                if (JogoDaVelha.checaVencedor(tabuleiro)) {
                     System.out.println("Jogador 02 Venceu!");
+                } else if (!JogoDaVelha.verificaSeHaJogo(tabuleiro, jogadasRestantes, 'X')){
+                    System.out.println("Deu Velha!");
                 }
             }
         }

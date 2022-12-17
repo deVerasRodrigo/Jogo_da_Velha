@@ -1,7 +1,6 @@
 import java.util.Scanner;
 
 public class JogoDaVelha {
-
     public static void imprimirTabuleiro (Character[][] tabuleiro){
         for (int indiceLinha = 0; indiceLinha < tabuleiro.length; indiceLinha++) {
 
@@ -66,5 +65,60 @@ public class JogoDaVelha {
 
         tabuleiro[jogadaO[0]-1][jogadaO[1]-1] = 'O';
     }
+    public static boolean verificarSeVenceu(Character [][] tabuleiro){
+        if (contarLinhasIguais(tabuleiro) > 0 || contarColunasIguais(tabuleiro) > 0 || verificarDiagonaisIguais(tabuleiro)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+    private static int contarLinhasIguais(Character[][] tabuleiro){
+        int linhasIguais = 0;
+        int elementosIguaisNaLinha = 0;
+        for (Character[] linha : tabuleiro) {
+            for (Character posicao : linha) {
+                Character elementoNaColuna0 = linha[0];
+                if (posicao == elementoNaColuna0 && elementoNaColuna0 != null) {
+                    elementosIguaisNaLinha++;
+                }
+                if (elementosIguaisNaLinha == 3){
+                    linhasIguais++;
+                }
+            }
+            elementosIguaisNaLinha = 0;
+        }
+        return linhasIguais;
+    }
 
+    //PRA LEMBRAR: MUDAR O NOME DO CODIGO PARA CONTAR LINHAS IGUAIS, ADICIONAR UM CONTADOR PRA SOMAR A QUANTIDADE DE LINHAS OU COLUNAS OU DIAGONAIS IGUAIS!
+    private static int contarColunasIguais(Character[][] tabuleiro){
+        int colunasIguais = 0;
+        int elementosIguaisNaColuna = 0;
+
+        for (int indiceColuna = 0; indiceColuna < tabuleiro[0].length; indiceColuna++) {
+            for (int indiceLinha = 0; indiceLinha < tabuleiro.length; indiceLinha++) {
+                Character posicao = tabuleiro[indiceLinha][indiceColuna];
+                Character elementoNaLinha0 = tabuleiro[0][indiceColuna];
+                if (posicao == elementoNaLinha0 && elementoNaLinha0 != null) {
+                    elementosIguaisNaColuna++;
+                }
+                if (elementosIguaisNaColuna == 3){
+                    colunasIguais++;
+                }
+            }
+            elementosIguaisNaColuna = 0;
+        }
+        return colunasIguais;
+    }
+    private static boolean verificarDiagonaisIguais (Character[][] tabuleiro){
+        if (tabuleiro[0][0] == tabuleiro [1][1] && tabuleiro[1][1] == tabuleiro[2][2] && tabuleiro[0][0] != null){
+            return true;
+        }
+        if (tabuleiro[0][2] == tabuleiro [1][1] && tabuleiro[1][1] == tabuleiro[2][0] && tabuleiro[0][2] != null){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 }

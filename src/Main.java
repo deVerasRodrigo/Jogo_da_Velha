@@ -2,33 +2,22 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Character[][] tabuleiro = new Character[3][3];
         Scanner scanner = new Scanner(System.in);
 
-        JogoDaVelha.imprimirTabuleiro(tabuleiro);
+        System.out.println("O que deseja fazer?");
+        System.out.println("[1] - Ver regras e instruções");
+        System.out.println("[2] - Começar um jogo");
+        int opcao = scanner.nextInt();
 
-        int jogadasRestantes = 9;
+        while (opcao != 1 && opcao != 2){
+            System.out.println("Opção inválida. Digite 1 ou 2.");
+            opcao = scanner.nextInt();
+        }
 
-        while (!JogoDaVelha.checaVencedor(tabuleiro) && JogoDaVelha.verificaSeHaJogo(tabuleiro, jogadasRestantes, 'X')) {
-
-            JogoDaVelha.jogadaDeX(tabuleiro, scanner);
-            JogoDaVelha.imprimirTabuleiro(tabuleiro);
-            jogadasRestantes--;
-
-            if (JogoDaVelha.checaVencedor(tabuleiro)) {
-                System.out.println("Jogador 01 Venceu!");
-            } else if (!JogoDaVelha.verificaSeHaJogo(tabuleiro,jogadasRestantes, 'O')) {
-                System.out.println("Deu Velha!");
-            } else {
-                JogoDaVelha.jogadaDeO(tabuleiro, scanner);
-                JogoDaVelha.imprimirTabuleiro(tabuleiro);
-                jogadasRestantes--;
-                if (JogoDaVelha.checaVencedor(tabuleiro)) {
-                    System.out.println("Jogador 02 Venceu!");
-                } else if (!JogoDaVelha.verificaSeHaJogo(tabuleiro, jogadasRestantes, 'X')){
-                    System.out.println("Deu Velha!");
-                }
-            }
+        if (opcao == 1){
+            JogoDaVelha.imprimirInstrucoes();
+        } else {
+            JogoDaVelha.jogar();
         }
     }
 }

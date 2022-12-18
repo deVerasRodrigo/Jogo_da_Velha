@@ -1,7 +1,80 @@
 import java.util.Scanner;
 
 public class JogoDaVelha {
-    public static void imprimirTabuleiro (Character[][] tabuleiro){
+    public static void jogar() {
+        Character[][] tabuleiro = new Character[3][3];
+        Scanner scanner = new Scanner(System.in);
+
+        imprimirTabuleiro(tabuleiro);
+
+        int jogadasRestantes = 9;
+
+        while (!checaVencedor(tabuleiro) && verificaSeHaJogo(tabuleiro, jogadasRestantes, 'X')) {
+
+            jogadaDeX(tabuleiro, scanner);
+            imprimirTabuleiro(tabuleiro);
+            jogadasRestantes--;
+
+            if (checaVencedor(tabuleiro)) {
+                System.out.println("**********************");
+                System.out.println("* Jogador 01 Venceu! *");
+                System.out.println("**********************");
+
+            } else if (!verificaSeHaJogo(tabuleiro,jogadasRestantes, 'O') &&
+                        !verificaSeHaJogo(tabuleiro, jogadasRestantes, 'X')) {
+                System.out.println("**************");
+                System.out.println("* Deu Velha! *");
+                System.out.println("**************");
+            } else {
+                jogadaDeO(tabuleiro, scanner);
+                imprimirTabuleiro(tabuleiro);
+                jogadasRestantes--;
+
+                if (checaVencedor(tabuleiro)) {
+                    System.out.println("**********************");
+                    System.out.println("* Jogador 02 Venceu! *");
+                    System.out.println("**********************");
+                } else if (!verificaSeHaJogo(tabuleiro, jogadasRestantes, 'X')){
+                    System.out.println("**************");
+                    System.out.println("* Deu Velha! *");
+                    System.out.println("**************");
+                }
+            }
+        }
+    }
+    public static void imprimirInstrucoes(){
+        Character[][] tabuleiro = new Character[3][3];
+        System.out.println("********************REGRAS E INSTRUÇÕES********************");
+        System.out.println();
+        System.out.println("* O jogo se dá em um tabuleiro quadrado com 9 casas:");
+        imprimirTabuleiro(tabuleiro);
+        System.out.println("* Cada jogador preencherá, alternadamente, uma casa\n" +
+                           "  com seu símbolo.");
+        System.out.println("* O jogador 01 preencherá as casas X;");
+        System.out.println("* O jogador 02 preencherá as casas O;");
+        System.out.println("* Para fazer uma jogada, o jogador deverá indicar\n" +
+                           "  as coordenadas da seguinte forma:");
+        System.out.println();
+        System.out.println("[índice da linha(1,2 ou 3)] [índice da coluna(1,2 ou 3)]");
+        System.out.println();
+        System.out.println("Por exemplo:");
+        System.out.println("Jogador 1 (X) faça sua jogada:");
+        System.out.println("2 3");
+        tabuleiro[1][2] = 'X';
+        imprimirTabuleiro(tabuleiro);
+        System.out.println();
+        System.out.println("* Vence o jogador que completar uma linha, coluna ou\n" +
+                           "  diagonal com 3 símbolos iguais!");
+        System.out.println();
+        System.out.println("Vamos começar?");
+        System.out.println();
+        System.out.println("***********************************************************");
+        System.out.println();
+        jogar();
+
+    }
+
+    private static void imprimirTabuleiro (Character[][] tabuleiro){
         for (int indiceLinha = 0; indiceLinha < tabuleiro.length; indiceLinha++) {
 
             Character [] linha = tabuleiro[indiceLinha];
@@ -51,21 +124,21 @@ public class JogoDaVelha {
         }
         return jogada;
     }
-    public static void jogadaDeX (Character[][] tabuleiro, Scanner scanner){
+    private static void jogadaDeX (Character[][] tabuleiro, Scanner scanner){
         System.out.println("Jogador 1 (X) faça sua jogada:");
 
         int [] jogadaX = jogarSimbolo(tabuleiro, scanner);
 
         tabuleiro[jogadaX[0]-1][jogadaX[1]-1] = 'X';
     }
-    public static void jogadaDeO (Character[][] tabuleiro, Scanner scanner){
+    private static void jogadaDeO (Character[][] tabuleiro, Scanner scanner){
         System.out.println("Jogador 2 (O) faça sua jogada:");
 
         int [] jogadaO = jogarSimbolo(tabuleiro, scanner);
 
         tabuleiro[jogadaO[0]-1][jogadaO[1]-1] = 'O';
     }
-    public static boolean checaVencedor(Character [][] tabuleiro){
+    private static boolean checaVencedor(Character [][] tabuleiro){
         if (contarLinhasCompletas(tabuleiro) > 0 || contarColunasCompletas(tabuleiro) > 0 || verificarDiagonaisCompletas(tabuleiro)){
             return true;
         } else {
@@ -93,8 +166,8 @@ public class JogoDaVelha {
         int colunasCompletas = 0;
         int elementosIguaisNaColuna = 0;
 
-        for (int indiceColuna = 0; indiceColuna < tabuleiro[0].length; indiceColuna++) {
-            for (int indiceLinha = 0; indiceLinha < tabuleiro.length; indiceLinha++) {
+        for (int indiceColuna = 0; indiceColuna < 3; indiceColuna++) {
+            for (int indiceLinha = 0; indiceLinha < 3; indiceLinha++) {
                 Character posicao = tabuleiro[indiceLinha][indiceColuna];
                 Character elementoNaLinha0 = tabuleiro[0][indiceColuna];
                 if (posicao == elementoNaLinha0 && elementoNaLinha0 != null) {
@@ -120,7 +193,7 @@ public class JogoDaVelha {
         }
     }
 
-    public static boolean verificaSeHaJogo(Character[][] tabuleiro, int jogadasRestantes, Character simbolo){
+    private static boolean verificaSeHaJogo(Character[][] tabuleiro, int jogadasRestantes, Character simbolo){
 
         if (jogadasRestantes > 2){
             return true;

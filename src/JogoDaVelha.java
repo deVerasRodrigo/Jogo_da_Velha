@@ -115,17 +115,24 @@ public class JogoDaVelha {
     }
     private static int [] jogarSimbolo (Character[][] tabuleiro, Scanner scanner){
         int [] jogada = new int[2];
+
         System.out.print("Escolha uma linha: ");
-        jogada [0] = scanner.nextInt();
+        char linhaEscolhida = scanner.next().charAt(0);
+        jogada [0] = Character.getNumericValue(linhaEscolhida);
+
         System.out.print("Escolha uma coluna: ");
-        jogada [1] = scanner.nextInt();
+        char colunaEscolhida = scanner.next().charAt(0);
+        jogada [1] = Character.getNumericValue(colunaEscolhida);
 
         while (!jogadaValida(tabuleiro, jogada)){
             System.out.println("Jogada inválida! tente novamente:");
             System.out.print("Escolha uma linha: ");
-            jogada [0] = scanner.nextInt();
+            linhaEscolhida = scanner.next().charAt(0);
+            jogada [0] = Character.getNumericValue(linhaEscolhida);
+
             System.out.print("Escolha uma coluna: ");
-            jogada [1] = scanner.nextInt();
+            colunaEscolhida = scanner.next().charAt(0);
+            jogada [1] = Character.getNumericValue(colunaEscolhida);
         }
         return jogada;
     }

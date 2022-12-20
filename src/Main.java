@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -7,14 +8,15 @@ public class Main {
         System.out.println("O que deseja fazer?");
         System.out.println("[1] - Ver regras e instruções");
         System.out.println("[2] - Começar um jogo");
-        int opcao = scanner.nextInt();
+        char opcao = 0;
 
-        while (opcao != 1 && opcao != 2){
+        opcao = scanner.next().charAt(0);
+
+        while (opcao != '1' && opcao != '2') {
             System.out.println("Opção inválida. Digite 1 ou 2.");
-            opcao = scanner.nextInt();
+            opcao = scanner.next().charAt(0);
         }
-
-        if (opcao == 1){
+        if (opcao == '1') {
             JogoDaVelha.imprimirInstrucoes();
         } else {
             JogoDaVelha.jogar();

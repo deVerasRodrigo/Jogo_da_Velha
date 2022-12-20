@@ -53,13 +53,13 @@ public class JogoDaVelha {
         System.out.println("* O jogador 01 preencherá as casas X;");
         System.out.println("* O jogador 02 preencherá as casas O;");
         System.out.println("* Para fazer uma jogada, o jogador deverá indicar\n" +
-                           "  as coordenadas da seguinte forma:");
-        System.out.println();
-        System.out.println("[índice da linha(1,2 ou 3)] [índice da coluna(1,2 ou 3)]");
+                           "  as coordenadas da linha e da coluna");
         System.out.println();
         System.out.println("Por exemplo:");
         System.out.println("Jogador 1 (X) faça sua jogada:");
-        System.out.println("2 3");
+        System.out.print("Escolha uma linha: 2\n");
+        System.out.print("Escolha uma coluna: 3\n");
+
         tabuleiro[1][2] = 'X';
         imprimirTabuleiro(tabuleiro);
         System.out.println();
@@ -75,21 +75,23 @@ public class JogoDaVelha {
     }
 
     private static void imprimirTabuleiro (Character[][] tabuleiro){
+        System.out.println("#   1   2   3   ");
         for (int indiceLinha = 0; indiceLinha < tabuleiro.length; indiceLinha++) {
 
             Character [] linha = tabuleiro[indiceLinha];
             System.out.println("---------------");
+            System.out.print(indiceLinha+1 + " ");
 
             for (int indiceColuna = 0; indiceColuna < linha.length; indiceColuna++) {
                 Character posicao = tabuleiro[indiceLinha][indiceColuna];
 
                 if (posicao == null){
-                    System.out.print(" |  ");
+                    System.out.print("|   ");
                 } else {
-                    System.out.print(" | " + posicao);
+                    System.out.print("| " + posicao + " ");
                 }
                 if (indiceColuna == linha.length-1){
-                    System.out.print(" |");
+                    System.out.print("|");
                 }
             }
             System.out.println();
@@ -113,26 +115,29 @@ public class JogoDaVelha {
     }
     private static int [] jogarSimbolo (Character[][] tabuleiro, Scanner scanner){
         int [] jogada = new int[2];
-
+        System.out.print("Escolha uma linha: ");
         jogada [0] = scanner.nextInt();
+        System.out.print("Escolha uma coluna: ");
         jogada [1] = scanner.nextInt();
 
         while (!jogadaValida(tabuleiro, jogada)){
             System.out.println("Jogada inválida! tente novamente:");
+            System.out.print("Escolha uma linha: ");
             jogada [0] = scanner.nextInt();
+            System.out.print("Escolha uma coluna: ");
             jogada [1] = scanner.nextInt();
         }
         return jogada;
     }
     private static void jogadaDeX (Character[][] tabuleiro, Scanner scanner){
-        System.out.println("Jogador 1 (X) faça sua jogada:");
+        System.out.println("Jogador 1 (X) faça sua jogada");
 
         int [] jogadaX = jogarSimbolo(tabuleiro, scanner);
 
         tabuleiro[jogadaX[0]-1][jogadaX[1]-1] = 'X';
     }
     private static void jogadaDeO (Character[][] tabuleiro, Scanner scanner){
-        System.out.println("Jogador 2 (O) faça sua jogada:");
+        System.out.println("Jogador 2 (O) faça sua jogada");
 
         int [] jogadaO = jogarSimbolo(tabuleiro, scanner);
 

@@ -178,8 +178,8 @@ public class JogoDaVelha {
         int colunasCompletas = 0;
         int elementosIguaisNaColuna = 0;
 
-        for (int indiceColuna = 0; indiceColuna < 3; indiceColuna++) {
-            for (int indiceLinha = 0; indiceLinha < 3; indiceLinha++) {
+        for (int indiceColuna = 0; indiceColuna < tabuleiro[0].length; indiceColuna++) {
+            for (int indiceLinha = 0; indiceLinha < tabuleiro.length; indiceLinha++) {
                 Character posicao = tabuleiro[indiceLinha][indiceColuna];
                 Character elementoNaLinha0 = tabuleiro[0][indiceColuna];
                 if (posicao == elementoNaLinha0 && elementoNaLinha0 != null) {
@@ -193,16 +193,33 @@ public class JogoDaVelha {
         }
         return colunasCompletas;
     }
-    private static boolean verificarDiagonaisCompletas (Character[][] tabuleiro){
-        if (tabuleiro[0][0] == tabuleiro [1][1] && tabuleiro[1][1] == tabuleiro[2][2] && tabuleiro[0][0] != null){
-            return true;
+    private static boolean verificarDiagonaisCompletas(Character[][] tabuleiro){
+        int elementosIguaisNaDiagonal = 0;
+        for(int indiceLinha = 0; indiceLinha < tabuleiro.length; indiceLinha++){
+            int indiceColuna = indiceLinha;
+            Character elementoReferencia = tabuleiro[0][0];
+            Character elemento = tabuleiro[indiceLinha][indiceColuna];
+            if (elemento == elementoReferencia && elementoReferencia != null){
+                elementosIguaisNaDiagonal++;
+            }
+            if (elementosIguaisNaDiagonal == tabuleiro.length){
+                return true;
+            }
         }
-        if (tabuleiro[0][2] == tabuleiro [1][1] && tabuleiro[1][1] == tabuleiro[2][0] && tabuleiro[0][2] != null){
-            return true;
+
+        elementosIguaisNaDiagonal = 0;
+        int indiceColuna = tabuleiro.length-1;
+        for (int indiceLinha = 0; indiceLinha < tabuleiro.length; indiceLinha++){
+            Character elementoReferencia = tabuleiro [0][tabuleiro.length-1];
+            if (tabuleiro[indiceLinha][indiceColuna] == elementoReferencia && elementoReferencia != null){
+                elementosIguaisNaDiagonal++;
+            }
+            if (elementosIguaisNaDiagonal == tabuleiro.length){
+                return true;
+            }
+            indiceColuna--;
         }
-        else{
-            return false;
-        }
+        return false;
     }
 
     private static boolean verificaSeHaJogo(Character[][] tabuleiro, int jogadasRestantes, Character simbolo){
@@ -211,10 +228,10 @@ public class JogoDaVelha {
             return true;
         }
 
-        for (int indiceLinha = 0; indiceLinha < 3; indiceLinha++) {
+        for (int indiceLinha = 0; indiceLinha < tabuleiro.length; indiceLinha++) {
             int simbolosNaLinha = 0;
             int vaziosNaLinha = 0;
-            for (int indiceColuna = 0; indiceColuna < 3; indiceColuna++) {
+            for (int indiceColuna = 0; indiceColuna < tabuleiro[0].length; indiceColuna++) {
                 if (tabuleiro[indiceLinha][indiceColuna] == simbolo){
                     simbolosNaLinha++;
                 } else if (tabuleiro[indiceLinha][indiceColuna] == null){
@@ -226,10 +243,10 @@ public class JogoDaVelha {
             }
         }
 
-        for (int indiceColuna = 0; indiceColuna < 3; indiceColuna++) {
+        for (int indiceColuna = 0; indiceColuna < tabuleiro[0].length; indiceColuna++) {
             int simbolosNaColuna = 0;
             int vaziosNaColuna = 0;
-            for (int indiceLinha = 0; indiceLinha < 3; indiceLinha++) {
+            for (int indiceLinha = 0; indiceLinha < tabuleiro.length; indiceLinha++) {
                 if (tabuleiro[indiceLinha][indiceColuna] == simbolo){
                     simbolosNaColuna++;
                 } else if (tabuleiro[indiceLinha][indiceColuna] == null){
@@ -243,7 +260,7 @@ public class JogoDaVelha {
 
             int simbolosNaDiagonal = 0;
             int vaziosNaDiagonal = 0;
-        for (int indiceLinha = 0; indiceLinha < 3; indiceLinha++) {
+        for (int indiceLinha = 0; indiceLinha < tabuleiro.length; indiceLinha++) {
             int indiceColuna = indiceLinha;
             if (tabuleiro[indiceLinha][indiceColuna] == simbolo) {
                 simbolosNaDiagonal++;
@@ -256,8 +273,8 @@ public class JogoDaVelha {
         }
         simbolosNaDiagonal = 0;
         vaziosNaDiagonal = 0;
-        int indiceColuna = 2;
-        for (int indiceLinha = 0; indiceLinha < 3; indiceLinha++){
+        int indiceColuna = tabuleiro.length-1;
+        for (int indiceLinha = 0; indiceLinha < tabuleiro.length; indiceLinha++){
             if (tabuleiro[indiceLinha][indiceColuna] == simbolo){
                 simbolosNaDiagonal++;
             }else if (tabuleiro[indiceLinha][indiceColuna] == null ){
